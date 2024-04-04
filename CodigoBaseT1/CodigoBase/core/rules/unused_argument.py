@@ -24,8 +24,6 @@ class UnusedArgumentVisitor(WarningNodeVisitor):
 
     def get_used_args(self, node):
         used_args = set()
-        args = set()
-        pdb.set_trace()
         # Caso base: si el nodo es una llamada a función
         if isinstance(node, ast.Assign):
             # Recorre los argumentos de la llamada
@@ -47,6 +45,11 @@ class UnusedArgumentVisitor(WarningNodeVisitor):
         elif hasattr(node, 'body'):
             for child_node in node.body:
                 used_args.update(self.get_used_args(child_node))
+
+        elif isinstance(node, ast.Return):
+            if isinstance(node.value, ast.BinOp):
+                used_args.add(node.value.left.id)
+                used_args.add(node.value.right.id)
 
         return used_args
 
