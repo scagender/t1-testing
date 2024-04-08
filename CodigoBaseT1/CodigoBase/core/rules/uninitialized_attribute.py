@@ -25,8 +25,8 @@ class UninitializedAttributeVisitor(WarningNodeVisitor):
             if isinstance(node.value, ast.Name) and node.value.id == 'self':
                 attr_name = node.attr
                 if attr_name not in self.initialized_attributes:
-                    self.addWarning('UninitializedAttribute', node.lineno,
-                                     f'{attr_name} attribute was not initialized in __init__')
+                    self.addWarning("UninitializedAttribute", node.lineno, f"{attr_name} attribute was not initialized!")
+
 
 
 class UninitializedAttributeRule(Rule):
